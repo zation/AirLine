@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div class="wrapper">
+		<label for="start-city">Start City Name:</label>
+		<input type="text" id="start-city" name="start-city" value="chengdu"/>
+
+		<label for="end-city">End City Name:</label>
+		<input type="text" id="end-city" name="end-city" value="xian"/>
+
+		<button id="find">Find</button>
+
+		<div id="map_canvas" class="map_canvas"></div>
+	</div>
+
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDZzO9BcIgeQWPr-VHHC02OMPJVGR6AyJw&sensor=false"></script>
+	<script src="js/flight.js"></script>
+</body>
+</html>
