@@ -1,9 +1,14 @@
 .wrapper {
-	width: 80%;
+	width: 1200px;
 	margin: 0 auto;
 	text-align: center;
 }
 
 .map_canvas {
 	height: 600px;
+}
+
+.draw_canvas {
+	position: absolute;
+	top: 30px;
 }

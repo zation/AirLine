@@ -1,7 +1,7 @@
 var circle = {
-  centerX: 250,
-  centerY: 250,
-  radius: 125,
+  centerX: 640,
+  centerY: 480,
+  radius: 10,
   angle: 0
 };
 
