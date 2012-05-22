@@ -12,3 +12,14 @@
 	position: absolute;
 	top: 30px;
 }
+
+.avatar {
+	position: absolute;
+	opacity: 0;
+}
+
+.avatar-image {
+	position: absolute;
+	top: -17px;
+	border-radius: 20px;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div class="wrapper">
+		<label for="start-city">Start City Name:</label>
+		<input type="text" id="start-city" name="start-city" value="chengdu"/>
+
+		<label for="end-city">End City Name:</label>
+		<input type="text" id="end-city" name="end-city" value="xian"/>
+
+		<button id="go">go</button>
+
+		<div id="map_canvas" class="map_canvas"></div>
+		<div class="avatar">
+			<img class="avatar-image" src="image/mike.jpeg" />
+			<img class="pin" src="image/pin_map.png" />
+		</div>
+	</div>
+
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDZzO9BcIgeQWPr-VHHC02OMPJVGR6AyJw&sensor=false"></script>
+	<script type="text/javascript" src="js/lib/jquery-1.7.1.min.js"></script>
+	<script src="js/lib/simple.js"></script>
+	<script type="text/javascript">
+		$('#go').on('click', function() {
+			$('#map_canvas').fly($('#start-city').val(), $('#end-city').val(), 'image/pin_map.png', 'image / pin_map.png');
+		});
+	</script>
+</body>
+</html>
