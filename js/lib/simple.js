@@ -2,9 +2,6 @@
 	function MyOverlay(map, avatarPath, pinPath) {
 		this.avatarPath = avatarPath;
 		this.pinPath = pinPath;
-		var container = $(map.getDiv());
-		this.containerLeft = container.offset().left;
-		this.containerTop = container.offset().top;
 		this.map = map;
 	}
 
@@ -33,11 +30,20 @@
 
 	MyOverlay.prototype.setLocation = function(location) {
 		this.location = location;
-	}	
+	};
 
 	MyOverlay.prototype.getPosition = function() {
 		var overlayProjection = this.getProjection();
 		var position = overlayProjection.fromLatLngToDivPixel(this.location);
+		return {
+			'top': position.y - this.markerHeight,
+			'left': position.x - this.markerWidth / 2
+		}
+	};
+
+	MyOverlay.prototype.getPositionReferToContainer = function() {
+		var overlayProjection = this.getProjection();
+		var position = overlayProjection.fromLatLngToContainerPixel(this.location);
 		return {
 			'top': position.y - this.markerHeight,
 			'left': position.x - this.markerWidth / 2
@@ -51,14 +57,17 @@
 	MyOverlay.prototype.hide = function(location, callback) {
 		this.setLocation(location);
 		var position = this.getPosition();
+		var positionReferToContainer = this.getPositionReferToContainer();
+		var top = position.top == positionReferToContainer.top ? 0 : position.top - positionReferToContainer.top;
+		console.log(top)
 		this.marker.css({
-			'top': 0,
+			'top': top,
 			'left': position.left
 		});
 		this.marker.animate({
 			'opacity': 1,
 			'top': position.top
-		}, 2000, callback);
+		}, 2000, 'easeOutBounce', callback);
 	};
 
 	MyOverlay.prototype.show = function(location, callback) {
@@ -122,6 +131,7 @@
 			var mapElement = $(this);
 			var mapOffset = mapElement.offset();
 			var map = new google.maps.Map(this, {
+				disableDefaultUI: true,
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				zoom: 6
 			});
