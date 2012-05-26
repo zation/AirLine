@@ -31,29 +31,47 @@
 		this.markerHeight = marker.height();
 	};
 
-	MyOverlay.prototype.resetPosition = function(location) {
-		this.location = location ? location : this.location;
+	MyOverlay.prototype.setLocation = function(location) {
+		this.location = location;
+	}	
+
+	MyOverlay.prototype.getPosition = function() {
 		var overlayProjection = this.getProjection();
 		var position = overlayProjection.fromLatLngToDivPixel(this.location);
-		this.marker.css({
+		return {
 			'top': position.y - this.markerHeight,
 			'left': position.x - this.markerWidth / 2
-		});
+		}
 	};
 
 	MyOverlay.prototype.draw = function() {
-		this.resetPosition();
+		this.marker.css(this.getPosition());
 	};
 
-	MyOverlay.prototype.hide = function(callback) {
+	MyOverlay.prototype.hide = function(location, callback) {
+		this.setLocation(location);
+		var position = this.getPosition();
+		this.marker.css({
+			'top': 0,
+			'left': position.left
+		});
 		this.marker.animate({
-			opacity: 0
+			'opacity': 1,
+			'top': position.top
 		}, 2000, callback);
 	};
 
-	MyOverlay.prototype.show = function(callback) {
+	MyOverlay.prototype.show = function(location, callback) {
+		this.setLocation(location);
+		var position = this.getPosition();
+		this.marker.css({
+			'top': position.top,
+			'left': position.left,
+			'opacity': 1
+		});
 		this.marker.animate({
-			opacity: 1
+			'opacity': 0,
+			'top': 0
 		}, 2000, callback);
 	};
 
@@ -82,12 +100,11 @@
 						endLocation = results[0].geometry.location;
 
 						google.maps.event.addListenerOnce(map, 'idle', function() {
-							overlay.show(function() {
+							overlay.show(startLocation, function() {
 								google.maps.event.addListenerOnce(map, 'idle', function() {
-									overlay.hide();
+									overlay.hide(endLocation);
 								});
 								map.panTo(endLocation);
-								overlay.resetPosition(endLocation);
 							});
 						});
 					} else {
@@ -100,11 +117,8 @@
 		});
 	}
 
-
 	$.fn.fly = function(startCityName, endCityName, avatarPath, pinPath) {
-
 		return this.each(function() {
-
 			var mapElement = $(this);
 			var mapOffset = mapElement.offset();
 			var map = new google.maps.Map(this, {
