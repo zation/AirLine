@@ -1,0 +1,18 @@
+.wrapper {
+	width: 1200px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.map_canvas {
+	height: 600px;
+	padding: 10px;
+	border: 2px solid #666;
+	box-shadow: 2px 2px 2px #666;
+}
+
+.avatar {
+	position: absolute;
+	top: -17px;
+	border-radius: 20px;
+}
