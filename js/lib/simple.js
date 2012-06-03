@@ -59,7 +59,6 @@
 		var position = this.getPosition();
 		var positionReferToContainer = this.getPositionReferToContainer();
 		var top = position.top == positionReferToContainer.top ? 0 : position.top - positionReferToContainer.top;
-		console.log(top)
 		this.marker.css({
 			'top': top,
 			'left': position.left
@@ -97,10 +96,6 @@
 		}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				startLocation = results[0].geometry.location;
-				map.setCenter(startLocation);
-
-				overlay.setLocation(startLocation);
-				overlay.setMap(map);
 
 				geocoder.geocode({
 					'address': endCityName
@@ -116,6 +111,9 @@
 								map.panTo(endLocation);
 							});
 						});
+
+						overlay.setLocation(startLocation);
+						map.setCenter(startLocation);
 					} else {
 						console.log("Geocode was not successful for the following reason: " + status);
 					}
@@ -136,6 +134,7 @@
 				zoom: 6
 			});
 			var overlay = new MyOverlay(map, avatarPath, pinPath);
+			overlay.setMap(map);
 
 			animate(map, startCityName, endCityName, overlay);
 		});
