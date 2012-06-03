@@ -20,9 +20,10 @@
 		});
 		this.marker.find('.avatar').css({
 			'position': 'absolute',
-			'top': -17,
+			'top': -3,
+			'left': 4,
 			'border-radius': 20,
-			'width': 48
+			'width': 40
 		})
 		this.markerWidth = marker.width();
 		this.markerHeight = marker.height();
