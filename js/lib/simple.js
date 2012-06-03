@@ -80,7 +80,7 @@
 		this.marker.animate({
 			'opacity': 0,
 			'top': 0
-		}, 2000, callback);
+		}, 2000, 'easeInBounce', callback);
 	};
 
 	MyOverlay.prototype.onRemove = function() {
