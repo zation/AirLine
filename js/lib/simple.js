@@ -1,7 +1,7 @@
 (function($) {
-	function MyOverlay(map, avatarPath, pinPath) {
-		this.avatarPath = avatarPath;
-		this.pinPath = pinPath;
+	function MyOverlay(map, avatar, pin) {
+		this.avatar = avatar;
+		this.pin = pin;
 		this.map = map;
 	}
 
@@ -12,8 +12,7 @@
 	};
 
 	MyOverlay.prototype.onAdd = function() {
-		var markerHtml = '<div class="marker">' + '<img class="avatar" src="' + this.avatarPath + '" />' + '<img class="pin" src="' + this.pinPath + '" />' + '</div>';
-		var marker = $(markerHtml).appendTo(this.getPanes().overlayLayer);
+		var marker = $('<div class="marker">' + '</div>').append(this.avatar).append(this.pin).appendTo(this.getPanes().overlayLayer);
 		this.marker = marker.css({
 			'opacity': 0,
 			'position': 'absolute'
@@ -134,10 +133,19 @@
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				zoom: 6
 			});
-			var overlay = new MyOverlay(map, avatarPath, pinPath);
-			overlay.setMap(map);
+			var avatar = new Image();
+			avatar.src = avatarPath;
+			avatar.className = "avatar";
+			avatar.onload = function() {
+				var pin = new Image();
+				pin.src = pinPath;
+				pin.onload = function() {
+					var overlay = new MyOverlay(map, avatar, pin);
+					overlay.setMap(map);
 
-			animate(map, startCityName, endCityName, overlay);
+					animate(map, startCityName, endCityName, overlay);
+				};
+			};
 		});
 	}
 })(jQuery);
